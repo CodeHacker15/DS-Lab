@@ -9,7 +9,6 @@ void InsertBegSLL(struct Node **h,int val)
 {
 	struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
 	new_node -> info = val;
-	new_node -> next = NULL;
 	new_node -> next = *h;
 	*h=new_node;
 }
@@ -19,7 +18,7 @@ void InsertLastSLL(struct Node **h,int val)
 	struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
 	new_node -> info = val;
 	new_node -> next = NULL;
-	if(*h== NULL) 
+	if(*h == NULL) 
     { 
       *h = new_node;
 	  return;
@@ -30,6 +29,35 @@ void InsertLastSLL(struct Node **h,int val)
 	}
 	last -> next = new_node;
 	return;
+}
+int InsertPosSLL(struct Node **h,int val,int pos)
+{
+	int count = 0,i;
+	struct Node* temp = *h;
+	struct Node* posptr = *h;
+	while(temp!= NULL)
+	{
+		temp = temp -> next;
+		 ++count;
+	}
+	if(pos>count+1)
+	{
+		printf("Insertion at this position is not possible \n");
+		free(temp);
+		return -8989;
+	}
+	else
+	{
+		struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+		new_node -> info = val;
+		new_node -> next = NULL;
+		for(i=1;i<pos-1;i++)
+		{
+			posptr = posptr -> next;
+		}
+		new_node -> next = posptr -> next;
+		posptr -> next = new_node;
+	}
 }
 int DeleteBegSLL(struct Node **h)
 {
@@ -76,66 +104,81 @@ void PrintListSLL(struct Node *node)
 }
 void main()
 {	
-	int ch,val,delval;
+	int ch,val,delval,pos;
 	struct Node *head=NULL;
 	loop:
 	printf("\n=====Welcome to LinkList Insertion===== \n");
 	printf("1.Insert at beginning \n");
 	printf("2.Insert at last \n");
-	printf("3.Delete at beginning \n");
-	printf("4.Delete at last \n");
-	printf("5.Print List \n");
-	printf("6. Exit \n");
+	printf("3.Insert at specific position \n");
+	printf("4.Delete at beginning \n");
+	printf("5.Delete at last \n");
+	printf("6.Delete at specific position \n");
+	printf("7.Print List \n");
+	printf("8.Exit \n");
 	printf("Enter your choice = ");
 	scanf("%d",&ch);
 	printf("======================================= \n");
 	switch(ch)
 	{
 		case 1:
-			printf("Enter the value you want to insert = ");
+			printf("\nEnter the value you want to insert = ");
 			scanf("%d",&val);
 			InsertBegSLL(&head,val);
-			printf("\nAfter Inserting LinkedList is : ");
+			printf("After Inserting LinkedList is : ");
 			PrintListSLL(head);
 			goto loop;
 			break;
 		case 2:
-			printf("Enter the value you want to insert = ");
+			printf("\nEnter the value you want to insert = ");
 			scanf("%d",&val);
 			InsertLastSLL(&head,val);
-			printf("\nAfter Inserting LinkedList is : ");
+			printf("After Inserting LinkedList is : ");
 			PrintListSLL(head);
 			goto loop;
 			break;
 		case 3:
-			printf("Deleting First Element of LinkedList.... \n");
-			delval = DeleteBegSLL(&head);
+			printf("\nEnter the value you want to insert = ");
+			scanf("%d",&val);
+			printf("Enter the position you want the value to be inserted at = ");
+			scanf("%d",&pos);
+			delval = InsertPosSLL(&head,val,pos);
 			if(delval != -8989)
 			{
-				printf("\nAfter Deleting LinkedList is : ");
+				printf("After Inserting LinkedList is : ");
 				PrintListSLL(head);
 			}
-			printf("\n Deleted element is = %d ",delval);
 			goto loop;
 			break;
 		case 4:
-			printf("Deleting Last Element of LinkedList.... \n");
-			delval = DeleteLastSLL(&head);
-			printf("\nAfter Deleting LinkedList is : ");
-			PrintListSLL(head);
-			printf("\n Deleted element is = %d ",delval);
+			printf("\nDeleting First Element of LinkedList.... \n");
+			delval = DeleteBegSLL(&head);
+			if(delval != -8989)
+			{
+				printf("After Deleting LinkedList is : ");
+				PrintListSLL(head);
+			}
+			printf("\nDeleted element is = %d ",delval);
 			goto loop;
 			break;
 		case 5:
-			printf("Showing LinkedList : \n");
+			printf("\nDeleting Last Element of LinkedList.... \n");
+			delval = DeleteLastSLL(&head);
+			printf("After Deleting LinkedList is : ");
+			PrintListSLL(head);
+			printf("\nDeleted element is = %d ",delval);
+			goto loop;
+			break;
+		case 7:
+			printf("\nShowing LinkedList : \n");
 			PrintListSLL(head);
 			goto loop;
 			break;
-		case 6:
+		case 8:
 			printf("===============Thank You=============== \n");
 			break;
 		default :
-			printf("Wrong input please try again! :( \n");
+			printf("\nWrong input please try again! :( \n");
 			goto loop;
 			break;
 	}
