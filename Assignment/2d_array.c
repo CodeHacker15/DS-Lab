@@ -158,35 +158,204 @@ void Sort_Col(int A[][10],int r,int c)
         printf("\n");
     }
 }
+void Sort_RowWise(int A[][10],int r,int c)
+{
+	int temp[r*c],count = 0,t;
+	for(int i = 0;i < r;i++)
+	{
+		for(int j = 0;j < c;j++) 
+        {
+        	temp[count] = A[i][j];
+        	count = count + 1;
+        }
+    }
+	for(int i = 0;i < r*c;i++) 
+   	{
+        for(int j = i + 1;j < r*c;j++)
+        {
+            if(temp[i] > temp[j]) 
+       		{
+                t =  temp[i];
+                temp[i] = temp[j];
+                temp[j] = t;
+            }
+        }
+    }
+    count = 0;
+    for(int i = 0;i < r;i++)
+	{
+		for(int j = 0;j < c;j++) 
+        {
+        	A[i][j] = temp[count];
+        	count = count + 1;
+        }
+    }
+    printf("After Sorting Row-Wise, Matrix : \n");
+    for(int i = 0;i < r;i++)
+	{
+		for(int j = 0;j < c;j++) 
+        {
+        	printf("%d",A[i][j]);
+        }
+        printf("\n");
+    }
+}
+void Sort_ColWise(int A[][10],int r,int c)
+{
+	int temp[r*c],count = 0,t;
+	for(int i = 0;i < r;i++)
+	{
+		for(int j = 0;j < c;j++) 
+        {
+        	temp[count] = A[i][j];
+        	count = count + 1;
+        }
+    }
+	for(int i = 0;i < r*c;i++) 
+   	{
+        for(int j = i + 1;j < r*c;j++)
+        {
+            if(temp[i] > temp[j]) 
+       		{
+                t =  temp[i];
+                temp[i] = temp[j];
+                temp[j] = t;
+            }
+        }
+    }
+    count = 0;
+    for(int i = 0;i < r;i++)
+	{
+		for(int j = 0;j < c;j++) 
+        {
+        	A[j][i] = temp[count];
+        	count = count + 1;
+        }
+    }
+    printf("After Sorting Column-Wise, Matrix : \n");
+    for(int i = 0;i < r;i++)
+	{
+		for(int j = 0;j < c;j++) 
+        {
+        	printf("%d",A[i][j]);
+        }
+        printf("\n");
+    }
+}
 void main()
 {
-	int m,n,l,o,A[10][10],B[10][10],mult[10][10];
-	printf("Enter row and column of Matrix 1 (row col) = ");
-	scanf("%d %d",&m,&n);
-	Input_Matrix(A,m,n,'A');
-	printf("Enter row and column of Matrix 2 (row col) = ");
-	scanf("%d %d",&l,&o);
-	Input_Matrix(B,m,n,'B');
-	if(n==l)
-		Multiply_Matrices(A,m,n,B,l,o,mult);
-	else
-		printf("Multiplication not possible please keep col of matrix 1 and row of matrix 2 same! \n");
-	Input_Matrix(A,3,3,'D');
-	Determinant_Matrix(A);
-	Input_Matrix(A,5,5,'S');
-	Sum_Diagonal(A,5);
-	Input_Matrix(A,5,5,'T');
-	Sum_Triangle(A,5,5);
-	Input_Matrix(A,5,5,'R');
-	Sum_Row(A,5,5);
-	Input_Matrix(A,5,5,'C');
-	Sum_Column(A,5,5);
-	Input_Matrix(A,5,5,'E');
-	Sum_EvenValues(A,5,5);
-	Input_Matrix(A,5,5,'D');
-	Sum_Div(A,5,5,5);
-	Input_Matrix(A,5,5,'R');
-	Sort_Row(A,5,5);
-	Input_Matrix(A,5,5,'C');
-	Sort_Col(A,5,5);
+	int m,n,l,o,A[10][10],B[10][10],mult[10][10],div,ch;
+	loop:
+	printf("\n=========Assignment 2D Array=========\n");
+	printf("1.Multiplication of 2 Matrices \n");
+	printf("2.Determinant of 3 x 3 Matrix \n");
+	printf("3.Sum of Diagonal Elements \n");
+	printf("4.Sum of Triangle Elements \n");
+	printf("5.Sum of each Row \n");
+	printf("6.Sum of each Column \n");
+	printf("7.Sum of all Even Values \n");
+	printf("8.Sum of all values divisble by n \n");
+	printf("9.Sort each Row of Matrix \n");
+	printf("10.Sort each Column of Matrix \n");
+	printf("11.Sort Matrix Row-Wise \n");
+	printf("12.Sort Matrix Column-Wise \n");
+	printf("Enter your choice = ");
+	scanf("%d",&ch);
+	printf("=======================================\n");
+	switch(ch)
+	{
+		case 1:
+			printf("Enter row and column of Matrix 1 (row col) = ");
+			scanf("%d %d",&m,&n);
+			Input_Matrix(A,m,n,'A');
+			printf("Enter row and column of Matrix 2 (row col) = ");
+			scanf("%d %d",&l,&o);
+			Input_Matrix(B,m,n,'B');
+			if(n==l)
+			{
+				printf("Multiplication of Matrix A x B is : \n");
+				Multiply_Matrices(A,m,n,B,l,o,mult);
+			}
+			else
+				printf("Multiplication not possible please keep col of matrix 1 and row of matrix 2 same! \n");
+			goto loop;
+			break;
+		case 2:
+			Input_Matrix(A,3,3,'D');
+			Determinant_Matrix(A);
+			goto loop;
+			break;
+		case 3:
+			printf("Enter row and column of Matrix (row col) = ");
+			scanf("%d %d",&m,&n);
+			Input_Matrix(A,m,n,'S');
+			Sum_Diagonal(A,m);
+			goto loop;
+			break;
+		case 4:
+			printf("Enter row and column of Matrix (row col) = ");
+			scanf("%d %d",&m,&n);
+			Input_Matrix(A,m,n,'T');
+			Sum_Triangle(A,m,n);
+			goto loop;
+			break;
+		case 5:
+			printf("Enter row and column of Matrix (row col) = ");
+			scanf("%d %d",&m,&n);
+			Input_Matrix(A,m,n,'R');
+			Sum_Row(A,m,n);
+			goto loop;
+			break;
+		case 6:
+			printf("Enter row and column of Matrix (row col) = ");
+			scanf("%d %d",&m,&n);
+			Input_Matrix(A,m,n,'C');
+			Sum_Column(A,m,n);
+			goto loop;
+			break;
+		case 7:
+			printf("Enter row and column of Matrix (row col) = ");
+			scanf("%d %d",&m,&n);
+			Input_Matrix(A,m,n,'E');
+			Sum_EvenValues(A,m,n);
+			goto loop;
+			break;
+		case 8:
+			printf("Enter row and column of Matrix (row col) = ");
+			scanf("%d %d",&m,&n);
+			Input_Matrix(A,m,n,'D');
+			printf("Enter value of n = ");
+			scanf("%d",&div);
+			Sum_Div(A,m,n,div);
+			goto loop;
+			break;
+		case 9:
+			printf("Enter row and column of Matrix (row col) = ");
+			scanf("%d %d",&m,&n);
+			Input_Matrix(A,m,n,'R');
+			Sort_Row(A,m,n);
+			goto loop;
+			break;
+		case 10:
+			printf("Enter row and column of Matrix (row col) = ");
+			scanf("%d %d",&m,&n);
+			Input_Matrix(A,m,n,'C');
+			Sort_Col(A,m,n);
+			goto loop;
+			break;
+		case 11:
+			printf("Enter row and column of Matrix (row col) = ");
+			scanf("%d %d",&m,&n);
+			Input_Matrix(A,m,n,'R');
+			Sort_RowWise(A,m,n);
+			goto loop;
+			break;
+		case 12:
+			printf("Enter row and column of Matrix (row col) = ");
+			scanf("%d %d",&m,&n);
+			Input_Matrix(A,m,n,'C');
+			Sort_ColWise(A,m,n);
+			goto loop;
+			break;
+	}
 }
