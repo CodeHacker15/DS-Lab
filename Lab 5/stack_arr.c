@@ -12,13 +12,11 @@ void push(int val)
 	}
 	else
 	{
-		
+		if(f == -1)
+			f = 0;
 		r = r + 1;
 		q[r] = val;
 	}
-	if(f == -1)
-		f = 0;
-	printf("%d %d",f,r);
 }
 int pop()
 {
@@ -32,14 +30,12 @@ int pop()
 	{
 		val = q[f];
 		f = f + 1;
-		printf("%d %d",f,r);
 		return val;
 	}
 }
 void show()
 {
 	int i;
-	printf("%d %d",f,r);
 	for(i = f;i <= r;i++)
 	{
 		printf("| %d |",q[i]);

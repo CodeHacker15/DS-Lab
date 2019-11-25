@@ -17,7 +17,7 @@ tnode* createNode(int info)
 }    
 tnode* insert_nonrecur(tnode* rptr, int val)
 {
-	if (rptr == NULL) 
+	if (rptr == NULL)
 		rptr = createNode(val);
 	else
 	{

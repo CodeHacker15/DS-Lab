@@ -39,6 +39,52 @@ void InsertEndDLL(struct Node **h,int val)
 	new_node -> prev = last;
 	return;
 }
+void InsertPosDLL(struct Node **prev_node,int val)
+{
+	struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+	if(prev_node == NULL)
+	{
+		printf("Previous Node cannot be NULL");
+		return;
+	}
+	new_node -> info = val;
+	new_node -> next = prev_node -> next;
+	prev_node -> next = new_node;
+	new_node -> prev = prev_node;
+	if(new_node -> next != NULL)
+		new_node -> next -> prev = new_node;
+}
+int DeleteBegDLL(struct Node **h)
+{
+	int val;
+	if(*h == NULL)
+	{
+		printf("Linked List is empty");
+		return;
+	}
+	struct Node* temp = *h;
+	val = temp -> info;
+	*h = temp -> next;
+	temp -> next -> prev = NULL;
+	free(temp);
+	return val;
+}
+int DeleteLastDLL(struct Node **h)
+{
+	int val;
+	if(*h == NULL)
+	{
+		printf("Linked List is empty");
+		return;
+	}
+	struct Node* temp = *h;
+	while(temp->next != NULL)
+	{
+		temp = temp -> next;
+	}
+	temp -> prev -> next = NULL;
+	free(temp);
+}
 void PrintListDLL(struct Node *node) 
 { 
 	struct Node* last;
