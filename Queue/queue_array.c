@@ -10,7 +10,7 @@ void insert(int val)
 		printf("Overflow!");
 		return;
 	}
-	if
+	if(f == -1)
 	{
 		f = 0;
 		r = 0;
@@ -24,15 +24,14 @@ void insert(int val)
 	}
 	q[r] = val;
 }
-int delete()
+void delete()
 {
-	int val;
 	if(f == -1)
 	{
 		printf("Underflow!");
-		return -8989;
+		return;
 	}
-	val = q[f];
+	printf("Element deleted from queue is : %d\n",q[f]);
 	if(f == r)
 	{
 		f = -1;
@@ -45,9 +44,8 @@ int delete()
 		else
 			f = f + 1;
 	}
-	return val;
 }
-void show()
+void display()
 {
 	int fp = f,rp = r;
 	if(f == -1)
@@ -78,39 +76,16 @@ void show()
 			fp++;
 		}
 	}
+	printf("\n");
 }
 void main()
 {
-	
-	int val,ch;
-	loop:
-	printf("\n=====Welcome to Queue Push/Pop===== \n");
-	printf("1.Insert Element \n");
-	printf("2.Delete Element \n");
-	printf("3.Display Queue \n");
-	printf("4.Exit \n");
-	printf("Enter your choice = ");
-	scanf("%d",&ch);
-	printf("======================================= \n");
-	switch(ch)
-	{
-		case 1:
-			printf("Enter value to be inserted = ");
-			scanf("%d",&val);
-			push(val);
-				printf("Value deleted is = %d",val);
-			goto loop;
-			break;
-		case 3:
-			show();
-			goto loop;
-			break;
-		case 4:
-			printf("===============Thank You=============== \n");
-			break;
-		default :
-			printf("\nWrong input please try again! :( \n");
-			goto loop;
-			break;
-	}
+	insert(10);
+	insert(20);
+	insert(30);
+	display();
+	delete();
+	delete();
+	insert(2);
+	display();
 }
