@@ -46,12 +46,20 @@ int InsertPosSLL(struct Node **h,int val,int pos)
 		free(temp);
 		return -8989;
 	}
+	if(pos == 0)
+	{
+		struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+		new_node -> info = val;
+		new_node -> next = *h;
+		*h = new_node;
+		return 0;
+	}
 	else
 	{
 		struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
 		new_node -> info = val;
 		new_node -> next = NULL;
-		for(i=1;i<pos-1;i++)
+		for(i=1;i<pos;i++)
 		{
 			posptr = posptr -> next;
 		}
@@ -72,25 +80,61 @@ int DeleteBegSLL(struct Node **h)
 		struct Node* del_ptr = *h;
 		val = del_ptr -> info ;
 		*h = del_ptr -> next;
-		del_ptr -> next = NULL;
 		free(del_ptr);
-		del_ptr = NULL;
 		return val;
 	}	
+}
+int DeletePosSLL(struct Node **h,int pos)
+{
+	if(*h == NULL)
+	{
+		printf("Underflow! \n");
+		return -8989;
+	}
+	int val;
+	if(pos == 0)
+	{
+		struct Node* del_ptr = *h;
+		val = del_ptr -> info ;
+		*h = del_ptr -> next;
+		free(del_ptr);
+		return val;
+	}
+	else
+	{
+		struct Node* pos_ptr;
+		struct Node* del_ptr = *h;
+		pos_ptr = del_ptr;
+		for(int i = 0;i < pos;i++)
+		{
+			pos_ptr = del_ptr;
+			del_ptr = del_ptr -> next;
+		}
+		val = del_ptr -> info;
+		pos_ptr -> next = del_ptr -> next;
+		free(del_ptr);
+		return val;
+	}
 }
 int DeleteLastSLL(struct Node **h)
 {
 	int val;
-	struct Node* sptr = *h;
-	struct Node* ptr;
-	while(sptr -> next != NULL)
+	struct Node* del_ptr = *h;
+	struct Node* pos_ptr;
+	if(*h == NULL)
 	{
-		ptr = sptr;
-		sptr = sptr -> next;
+		printf("Underflow! \n");
+		return -8989;
 	}
-	val = ptr -> info;
-	free(sptr -> next);
-	ptr -> next = NULL;
+	pos_ptr = del_ptr;
+	while(del_ptr -> next != NULL)
+	{
+		pos_ptr = del_ptr;
+		del_ptr = del_ptr -> next;
+	}
+	val = del_ptr -> info;
+	pos_ptr -> next = del_ptr -> next;
+	free(del_ptr);
 	return val;
 }
 void PrintListSLL(struct Node *node) 
@@ -154,7 +198,7 @@ void main()
 			printf("\nDeleting First Element of LinkedList.... \n");
 			delval = DeleteBegSLL(&head);
 			if(delval != -8989)
-			{
+			{	
 				printf("After Deleting LinkedList is : ");
 				PrintListSLL(head);
 			}
@@ -164,9 +208,25 @@ void main()
 		case 5:
 			printf("\nDeleting Last Element of LinkedList.... \n");
 			delval = DeleteLastSLL(&head);
-			printf("After Deleting LinkedList is : ");
-			PrintListSLL(head);
-			printf("\nDeleted element is = %d ",delval);
+			if(delval != -8989)
+			{
+				printf("After Deleting LinkedList is : ");
+				PrintListSLL(head);
+				printf("\nDeleted element is = %d ",delval);
+			}
+			goto loop;
+			break;
+		case 6:
+			printf("Enter the position you want the value to be deleted at = ");
+			scanf("%d",&pos);
+			printf("\nDeleting Element at pos %d of LinkedList.... \n",pos);
+			delval = DeletePosSLL(&head,pos);
+			if(delval != -8989)
+			{
+				printf("After Deleting LinkedList is : ");
+				PrintListSLL(head);
+				printf("\nDeleted element is = %d ",delval);
+			}
 			goto loop;
 			break;
 		case 7:
